@@ -1,5 +1,8 @@
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils import timezone
+# Import Point so we can create locations
+# using longitude and latitude coordinates
+from django.contrib.gis.geos import Point
 
 
 class Record(models.Model):
@@ -41,3 +44,4 @@ class Record(models.Model):
         max_length=100,
         choices=PERIOD_CHOICES)
     date_recorded = models.DateField(default=timezone.now)
+    location = models.PointField(max_length=150, SRID=4326)
