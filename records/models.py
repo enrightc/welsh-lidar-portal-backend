@@ -1,0 +1,43 @@
+from django.db import models
+from django.utils import timezone
+
+
+class Record(models.Model):
+    SITE_TYPE_CHOICES = [
+        ('bank', 'Bank'),
+        ('ditch', 'Ditch'),
+        ('enclosure', 'Enclosure'),
+        ('field_system', 'Field System'),
+        ('industrial', 'Industrial'),
+        ('industrial', 'Industrial'),
+        ('mound', 'Mound'),
+        ('pit', 'Pit'),
+        ('settlement', 'Settlement'),
+        ('trackway', 'Trackway'),
+        ('other', 'Other'),
+        ('unknown', 'Unknown')
+        # Add more types as needed
+    ]
+
+    PERIOD_CHOICES = [
+        ('neolithic', 'Neolithic'),
+        ('bronze_age', 'Bronze Age'),
+        ('iron_age', 'Iron Age'),
+        ('roman', 'Roman'),
+        ('medieval', 'Medieval'),
+        ('post_medieval', 'Post Medieval'),
+        ('modern', 'Modern'),
+        ('unknown', 'Unknown')
+    ]
+
+    title = models.CharField(max_length=150)
+    PRN = models.IntegerField(max_length=10)
+    description = models.TextField()
+    site_type = models.CharField(
+        max_length=100,
+        choices=SITE_TYPE_CHOICES
+    )
+    period = models.CharField(
+        max_length=100,
+        choices=PERIOD_CHOICES)
+    date_recorded = models.DateField(default=timezone.now)

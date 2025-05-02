@@ -1,0 +1,4 @@
+asgiref==3.8.1
+Django==5.2
+django-leaflet==0.31.0
+sqlparse==0.5.3
