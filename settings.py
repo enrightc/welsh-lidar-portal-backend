@@ -47,8 +47,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.gis.db',
+    'django.contrib.gis',
+    'django_extensions',
 
+    # Allauth apps
+    'django.contrib.sites',  # important!
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # My Apps
     'records.apps.RecordsConfig',
 ]
 
@@ -64,13 +71,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'urls'
 
+# Specify the context processors as follows:
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [],  # Add template folders here if needed
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -79,8 +88,28 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'wsgi.application'
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1  # Needed for `allauth`
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True  # Required for display purposes only
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Forces users to verify email
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/"
+EMAIL_BACKEND = (
+    'django.core.mail.backends.console.EmailBackend'  # For development only
+)
+
+WSGI_APPLICATION = 'wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
