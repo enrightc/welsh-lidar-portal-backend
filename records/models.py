@@ -34,7 +34,7 @@ class Record(models.Model):
     ]
 
     title = models.CharField(max_length=150)
-    PRN = models.IntegerField(max_length=10)
+    PRN = models.IntegerField()
     description = models.TextField()
     site_type = models.CharField(
         max_length=100,
@@ -44,4 +44,4 @@ class Record(models.Model):
         max_length=100,
         choices=PERIOD_CHOICES)
     date_recorded = models.DateField(default=timezone.now)
-    location = models.PointField(max_length=150, SRID=4326)
+    location = models.PointField(max_length=150, srid=4326)

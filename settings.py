@@ -14,6 +14,9 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -59,7 +62,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {
@@ -76,7 +79,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
