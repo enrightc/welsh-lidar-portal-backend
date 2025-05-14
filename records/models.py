@@ -44,4 +44,7 @@ class Record(models.Model):
         max_length=100,
         choices=PERIOD_CHOICES)
     date_recorded = models.DateField(default=timezone.now)
-    location = models.PointField(max_length=150, srid=4326)
+    location = models.PointField(srid=4326, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.PRN})"
