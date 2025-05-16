@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django_extensions',
+    'rest_framework',
 
     # Allauth apps
     'django.contrib.sites',  # important!
