@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django_extensions',
     'rest_framework',
+    'rest_framework_gis',
+    'corsheaders',      # Enables Cross-Origin Resource Sharing (CORS) so the frontend (e.g. React) can talk to the backend (Django) from a different origin (like localhost:3000)
 
     # Allauth apps
     'django.contrib.sites',  # important!
@@ -61,6 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -178,3 +181,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins for CORS. This allows the frontend to communicate with the backend.
