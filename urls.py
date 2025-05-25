@@ -21,4 +21,8 @@ from records.api import views as records_api_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/records/', records_api_views.RecordList.as_view()),
+    # Djoser provides ready-made endpoints for user authentication (register, login, logout, etc.)
+    # The frontend (e.g. React) will send requests here during authentication — users won't see or visit these URLs directly.
+    path('api-auth-djoser/', include('djoser.urls')),
+    path('api-auth-djoser/', include('djoser.urls.authtoken')),
 ]

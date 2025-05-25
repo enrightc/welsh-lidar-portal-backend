@@ -52,6 +52,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'corsheaders',      # Enables Cross-Origin Resource Sharing (CORS) so the frontend (e.g. React) can talk to the backend (Django) from a different origin (like localhost:3000)
+    'djoser',        # Django REST framework authentication library
+    'rest_framework.authtoken',  # Token authentication for REST framework
 
     # My Apps
     'records.apps.RecordsConfig',
@@ -163,3 +165,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins for CORS. This allows the frontend to communicate with the backend.
 
 AUTH_USER_MODEL = 'users.User'  # Use the custom user model defined in users/models.py
+
+# This tells Django to use token-based login.
+# When users log in, they get a token, and they must include that token to access secure pages or actions.
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
