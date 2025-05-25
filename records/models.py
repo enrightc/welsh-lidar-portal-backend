@@ -6,6 +6,9 @@ from django.contrib.gis.geos import Point
 
 
 class Record(models.Model):
+    """
+    This model represents a record of an archaeological site.
+    """
     SITE_TYPE_CHOICES = [
         ('bank', 'Bank'),
         ('ditch', 'Ditch'),

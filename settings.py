@@ -55,6 +55,7 @@ INSTALLED_APPS = [
 
     # My Apps
     'records.apps.RecordsConfig',
+    'users.apps.UsersConfig',  # Custom user app for extending Django's default user model
 ]
 
 MIDDLEWARE = [
@@ -108,10 +109,8 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': (
@@ -162,3 +161,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins for CORS. This allows the frontend to communicate with the backend.
+
+AUTH_USER_MODEL = 'users.User'  # Use the custom user model defined in users/models.py
