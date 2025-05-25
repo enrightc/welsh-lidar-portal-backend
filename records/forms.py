@@ -26,8 +26,8 @@ class RecordsForm(forms.ModelForm):
         return data  # Return the updated data dictionary.
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs) # Call the default form setup.
-        location = self.initial.get('location') # Try to get the existing location value from the initial data.
-        if isinstance(location, Point): # Make sure the location is a proper Point object.
+        super().__init__(*args, **kwargs)  # Call the default form setup.
+        location = self.initial.get('location')  # Try to get the existing location value from the initial data.
+        if isinstance(location, Point):  # Make sure the location is a proper Point object.
             self.initial['latitude'] = location.tuple[0]
             self.initial['longitude'] = location.tuple[1]

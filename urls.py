@@ -20,7 +20,5 @@ from records.api import views as records_api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include(
-        'allauth.urls')),  # Allauth URLs for login, logout, etc.
     path('api/records/', records_api_views.RecordList.as_view()),
 ]

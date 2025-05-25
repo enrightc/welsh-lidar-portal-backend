@@ -53,11 +53,6 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'corsheaders',      # Enables Cross-Origin Resource Sharing (CORS) so the frontend (e.g. React) can talk to the backend (Django) from a different origin (like localhost:3000)
 
-    # Allauth apps
-    'django.contrib.sites',  # important!
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     # My Apps
     'records.apps.RecordsConfig',
 ]
@@ -95,23 +90,7 @@ TEMPLATES = [
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-SITE_ID = 1  # Needed for `allauth`
-
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = True  # Required for display purposes only
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Forces users to verify email
-ACCOUNT_USERNAME_MIN_LENGTH = 4
-LOGIN_URL = "/accounts/login/"
-LOGIN_REDIRECT_URL = "/"
-EMAIL_BACKEND = (
-    'django.core.mail.backends.console.EmailBackend'  # For development only
-)
 
 WSGI_APPLICATION = 'wsgi.application'
 
