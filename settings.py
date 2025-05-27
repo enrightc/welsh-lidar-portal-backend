@@ -173,3 +173,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
+
+DJOSER = {
+    "USER_CREATE_PASSWORD_RETYPE": True,  # Require users to enter their password twice when registering. If True, you need to pass re_password to /users/ endpoint, to validate password equality.
+    "SEND_ACTIVATION_EMAIL": False,  # Do not send activation emails. Set to True when deploying
+}
