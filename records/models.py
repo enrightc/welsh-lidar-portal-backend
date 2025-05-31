@@ -3,6 +3,8 @@ from django.utils import timezone
 # Import Point so we can create locations
 # using longitude and latitude coordinates
 from django.contrib.gis.geos import Point
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class Record(models.Model):
@@ -36,6 +38,12 @@ class Record(models.Model):
         ('unknown', 'Unknown')
     ]
 
+    recorded_by = models.ForeignKey(
+        'users.User',  # Assuming you have a custom user model in users app
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
     title = models.CharField(max_length=150)
     PRN = models.IntegerField()
     description = models.TextField()
@@ -47,7 +55,8 @@ class Record(models.Model):
         max_length=100,
         choices=PERIOD_CHOICES)
     date_recorded = models.DateField(default=timezone.now)
-    location = models.PointField(srid=4326, null=True, blank=True)
+    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.title} ({self.PRN})"
