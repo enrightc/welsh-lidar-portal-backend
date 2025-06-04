@@ -17,8 +17,19 @@ from dotenv import load_dotenv
 GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE_DIR is the root directory of your Django project.
+# It is the top-level folder that contains your manage.py file and all your apps.
+# You can use BASE_DIR to build paths to other folders or files in your project.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# __file__ means "the path to this current Python file" (in this case, settings.py).
+# Path(__file__) creates a Path object pointing to settings.py.
+# .resolve() turns that into an absolute path (so it's always a full path, not relative).
+# .parent gives you the folder containing settings.py (usually the 'backend' folder).
+# .parent.parent goes up one more level, to the folder containing the 'backend' folder.
+# This is usually the root folder of your Django project (where manage.py lives).
+# So, BASE_DIR will point to your project's root directory.
+# You can use BASE_DIR to easily build paths to other files or folders in your project,
+# without worrying about where your code is run from.
 
 # Load environment variables from .env file
 load_dotenv()
@@ -36,7 +47,6 @@ if not SECRET_KEY:
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -155,7 +165,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# The base URL for serving static files (CSS, JS, images used by your website's code)
+STATIC_URL = 'static/'  # e.g., http://yourwebsite.com/static/style.css
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# The base URL for serving media files (files uploaded by users, like photos)
+MEDIA_URL = '/media/'   # e.g., http://yourwebsite.com/media/photo.jpg
+
+# The location on your computer/server where uploaded media files will be stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'backend', 'media')
+# MEDIA_ROOT is the absolute path on your computer/server where uploaded media files will be stored.
+# By default, it combines BASE_DIR (your project root) with 'media', so uploads go in a folder called 'media' inside your project.
+# If you want uploads to go somewhere else, you can change MEDIA_ROOT to any folder path you like.
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

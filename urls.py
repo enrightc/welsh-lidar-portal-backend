@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from records.api import views as records_api_views
 
+# Serving files uploaded by a user during development
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/records/', records_api_views.RecordList.as_view()),
@@ -25,4 +29,4 @@ urlpatterns = [
     # The frontend (e.g. React) will send requests here during authentication — users won't see or visit these URLs directly.
     path('api-auth-djoser/', include('djoser.urls')),
     path('api-auth-djoser/', include('djoser.urls.authtoken')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

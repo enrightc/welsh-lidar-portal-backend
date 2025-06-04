@@ -11,7 +11,7 @@
 #         model = Record
 #         # List all the fields from Record to be exposed in the form, including lat/lon for coordinate entry
 #         fields = [
-#             'title', 'PRN', 'description', 'site_type', 'period', 'date_recorded',
+#             'title', 'PRN', 'description', 'site_type', 'period', 'date_recorded' 'picture1', 'picture2', 'picture3', 'picture4', 'picture5',
 #             'location', 'latitude', 'longitude'
 #         ]
 #     # These fields are not part of the Record model, but are used to capture user input for latitude and longitude.
