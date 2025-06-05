@@ -25,6 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/records/', records_api_views.RecordList.as_view()),
+    path('api/records/create/', records_api_views.RecordCreate.as_view()),
     # Djoser provides ready-made endpoints for user authentication (register, login, logout, etc.)
     # The frontend (e.g. React) will send requests here during authentication — users won't see or visit these URLs directly.
     path('api-auth-djoser/', include('djoser.urls')),
