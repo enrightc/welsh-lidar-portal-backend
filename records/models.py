@@ -1,11 +1,14 @@
 from django.contrib.gis.db import models
 from django.utils import timezone
+from django.db.models import JSONField # Import JSONField for storing polygon coordinates
 # Import Point so we can create locations
 # using longitude and latitude coordinates
 from django.contrib.gis.geos import Point
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+def today_date():
+    return timezone.now().date()
 
 class Record(models.Model):
     """
@@ -122,9 +125,10 @@ class Record(models.Model):
     period = models.CharField(
         max_length=100,
         choices=PERIOD_CHOICES)
-    date_recorded = models.DateField(default=timezone.now)
+    date_recorded = models.DateField(default=today_date)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
+    polygonCoordinate = JSONField(null=True, blank=True)  # Stores polygon as JSON
     picture1 = models.ImageField(
         blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
     picture2 = models.ImageField(
