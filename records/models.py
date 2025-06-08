@@ -1,14 +1,16 @@
 from django.contrib.gis.db import models
 from django.utils import timezone
-from django.db.models import JSONField # Import JSONField for storing polygon coordinates
+from django.db.models import JSONField  # Import JSONField for storing polygon coordinates
 # Import Point so we can create locations
 # using longitude and latitude coordinates
 from django.contrib.gis.geos import Point
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+
 def today_date():
     return timezone.now().date()
+
 
 class Record(models.Model):
     """
@@ -91,7 +93,7 @@ class Record(models.Model):
 
         # Unknown
         ('unknown', 'Unknown'),
-]
+    ]
 
     PERIOD_CHOICES = [
         ('neolithic', 'Neolithic'),
@@ -105,13 +107,14 @@ class Record(models.Model):
     ]
 
     recorded_by = models.ForeignKey(
-        'users.User',  # Assuming you have a custom user model in users app
+        User,  # Assuming you have a custom user model in users app
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
+        related_name="records"  # lets you access all records for a user with user.records.all()
     )
     title = models.CharField(max_length=150)
-    PRN = models.IntegerField()
+    PRN = models.IntegerField(blank=True, null=True)
     description = models.TextField()
     site_type = models.CharField(
         max_length=100,
@@ -126,9 +129,9 @@ class Record(models.Model):
         max_length=100,
         choices=PERIOD_CHOICES)
     date_recorded = models.DateField(default=today_date)
-    latitude = models.FloatField(blank=True, null=True)
-    longitude = models.FloatField(blank=True, null=True)
-    polygonCoordinate = JSONField(null=True, blank=True)  # Stores polygon as JSON
+    # latitude = models.FloatField(blank=True, null=True)
+    # longitude = models.FloatField(blank=True, null=True)
+    polygonCoordinate = JSONField(default=dict)  # Stores polygon as JSON
     picture1 = models.ImageField(
         blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
     picture2 = models.ImageField(
@@ -141,4 +144,4 @@ class Record(models.Model):
         blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
 
     def __str__(self):
-        return f"{self.title} ({self.PRN})"
+        return f"{self.title}"
