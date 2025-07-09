@@ -17,3 +17,11 @@ class ProfileList(generics.ListAPIView):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+
+class ProfileUpdate(generics.UpdateAPIView):
+    """
+    API view to update a profile.
+    """
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer

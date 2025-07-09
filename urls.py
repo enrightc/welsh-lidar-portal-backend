@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/profiles/', users_api_views.ProfileList.as_view()),
     path('api/profiles/<int:pk>/', users_api_views.ProfileDetail.as_view()),
+    path('api/profiles/<int:pk>/update/', users_api_views.ProfileUpdate.as_view()),
     path('api/records/', records_api_views.RecordList.as_view()),
     path('api/records/create/', records_api_views.RecordCreate.as_view()),
     # Djoser provides ready-made endpoints for user authentication (register, login, logout, etc.)
