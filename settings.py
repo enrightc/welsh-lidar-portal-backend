@@ -18,7 +18,7 @@ GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
 
 # BASE_DIR is the root directory of your Django project.
-# It is the top-level folder that contains your manage.py file and all your apps.
+# It is the top-level folder that contains your manage.py file and all apps.
 # You can use BASE_DIR to build paths to other folders or files in your project.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # __file__ means "the path to this current Python file" (in this case, settings.py).

@@ -111,7 +111,8 @@ class Record(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="records"  # lets you access all records for a user with user.records.all()
+        related_name="records"
+        # lets you access all records for a user with user.records.all()
     )
     title = models.CharField(max_length=150)
     PRN = models.IntegerField(blank=True, null=True)

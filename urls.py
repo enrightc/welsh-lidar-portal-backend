@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from records.api import views as records_api_views
+from users.api import views as users_api_views
 
 # Serving files uploaded by a user during development
 from django.conf import settings
@@ -24,6 +25,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/profiles/', users_api_views.ProfileList.as_view()),
+    path('api/profiles/<int:pk>/', users_api_views.ProfileDetail.as_view()),
     path('api/records/', records_api_views.RecordList.as_view()),
     path('api/records/create/', records_api_views.RecordCreate.as_view()),
     # Djoser provides ready-made endpoints for user authentication (register, login, logout, etc.)
