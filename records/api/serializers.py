@@ -15,4 +15,5 @@ class RecordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Record
-        fields = '__all__'  # Include all fields from the Record model
+        fields = '__all__'
+        read_only_fields = ['recorded_by']

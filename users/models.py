@@ -46,7 +46,7 @@ class Profile(models.Model):
     facebook = models.URLField(blank=True)
     instagram = models.URLField(blank=True)
     bluesky = models.URLField(blank=True)
-    Linkedin = models.URLField(blank=True)
+    linkedin = models.URLField(blank=True)
 
     joined_date = models.DateTimeField(auto_now_add=True)  # When the profile was created
     last_active = models.DateTimeField(

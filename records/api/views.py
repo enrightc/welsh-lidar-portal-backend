@@ -17,3 +17,6 @@ class RecordCreate(generics.CreateAPIView):
     """
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(recorded_by=self.request.user)
