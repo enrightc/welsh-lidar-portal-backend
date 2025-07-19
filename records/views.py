@@ -1,6 +1,5 @@
 from rest_framework import viewsets
 from .models import Record
-from .serializers import RecordSerializer
 from rest_framework.permissions import IsAuthenticated
 
 
