@@ -17,11 +17,16 @@ class ProfileSerializer(serializers.ModelSerializer):
     last_active = serializers.SerializerMethodField()
 
     def get_joined_date(self, obj):
+        '''
+        Returns the joined date formatted as 'DD/MM/YYYY'.'''
         if obj.joined_date:
             return obj.joined_date.strftime('%d/%m/%Y')
         return None
 
     def get_last_active(self, obj):
+        """
+        Returns the last active date formatted as 'DD/MM/YYYY'.
+        If the user has never been active, it returns None"""
         if obj.last_active:
             return obj.last_active.strftime('%d/%m/%Y')
         return None

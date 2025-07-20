@@ -52,6 +52,9 @@ class Profile(models.Model):
     last_active = models.DateTimeField(
             auto_now=True
         )  # Updates every time the profile is saved
+    
+    profile_picture = models.ImageField(
+        upload_to='profile_pictures/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
