@@ -13,6 +13,10 @@ class RecordSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
+    site_type_display = serializers.CharField(source='get_site_type_display', read_only=True)
+    monument_type_display = serializers.CharField(source='get_monument_type_display', read_only=True)
+    period_display = serializers.CharField(source='get_period_display', read_only=True)
+
     class Meta:
         model = Record
         fields = '__all__'
