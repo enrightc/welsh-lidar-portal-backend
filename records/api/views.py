@@ -10,7 +10,6 @@ class RecordList(generics.ListAPIView):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
 
-
 class RecordCreate(generics.CreateAPIView):
     """
     API view that allows users to create a new record.
