@@ -28,8 +28,10 @@ urlpatterns = [
     path('api/profiles/', users_api_views.ProfileList.as_view()),
     path('api/profiles/<int:pk>/', users_api_views.ProfileDetail.as_view()),
     path('api/profiles/<int:pk>/update/', users_api_views.ProfileUpdate.as_view()),
+    path('api/profiles/username/<str:username>/', users_api_views.ProfileByUsername.as_view()),
     path('api/records/', records_api_views.RecordList.as_view()),
     path('api/records/create/', records_api_views.RecordCreate.as_view()),
+    
     # Djoser provides ready-made endpoints for user authentication (register, login, logout, etc.)
     # The frontend (e.g. React) will send requests here during authentication — users won't see or visit these URLs directly.
     path('api-auth-djoser/', include('djoser.urls')),
