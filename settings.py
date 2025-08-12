@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
+
+load_dotenv()
 
 GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
@@ -109,17 +112,28 @@ WSGI_APPLICATION = 'wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'welsh_lidar_portal_db',
-        'USER': 'postgres',
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
-        'HOST': '127.0.0.1',
-        'PORT': '5432'
+# If DATABASE_URL is set in environment, use it (for deployment)
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True
+        )
     }
-}
+    DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+# Otherwise, use local settings (for development)
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'welsh_lidar_portal_db',
+            'USER': 'postgres',
+            'PASSWORD': os.environ.get('POSTGRES_PASSWORD', ''),
+            'HOST': '127.0.0.1',
+            'PORT': '5432'
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
