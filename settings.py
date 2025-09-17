@@ -15,8 +15,6 @@ import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
-
 GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
 GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
 
@@ -34,8 +32,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # You can use BASE_DIR to easily build paths to other files or folders in your project,
 # without worrying about where your code is run from.
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from the project root .env (must be after BASE_DIR is defined)
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -71,7 +69,30 @@ INSTALLED_APPS = [
     # My Apps
     'records.apps.RecordsConfig',
     'users.apps.UsersConfig',  # Custom user app for extending Django's default user model
+
+    # Storage
+    'storages'
 ]
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = "welsh-lidar-portal"
+AWS_S3_REGION_NAME = "eu-north-1"  
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+AWS_QUERYSTRING_AUTH = False   # cleaner URLs (no ?X-Amz-Signature=...)
+AWS_S3_FILE_OVERWRITE = False  # don’t overwrite files with same name
+AWS_DEFAULT_ACL = None         # rely on bucket policy for permissions
+
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -84,8 +105,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'urls'
 
@@ -182,18 +201,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# The base URL for serving static files (CSS, JS, images used by your website's code)
-STATIC_URL = 'static/'  # e.g., http://yourwebsite.com/static/style.css
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-# The base URL for serving media files (files uploaded by users, like photos)
-MEDIA_URL = '/media/'   # e.g., http://yourwebsite.com/media/photo.jpg
-
-# The location on your computer/server where uploaded media files will be stored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'backend', 'media')
-# MEDIA_ROOT is the absolute path on your computer/server where uploaded media files will be stored.
-# By default, it combines BASE_DIR (your project root) with 'media', so uploads go in a folder called 'media' inside your project.
-# If you want uploads to go somewhere else, you can change MEDIA_ROOT to any folder path you like.
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
