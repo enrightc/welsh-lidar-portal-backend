@@ -74,6 +74,9 @@ INSTALLED_APPS = [
     'storages'
 ]
 
+# Default - anything saved through a FileField or ImageField goes to S3
+#static files (e.g. CSS, JavaScript) served by WhiteNoise
+#media files (e.g. user-uploaded profile pictures) served by S3
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
@@ -86,12 +89,15 @@ STORAGES = {
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = "welsh-lidar-portal"
-AWS_S3_REGION_NAME = "eu-north-1"  
+AWS_S3_REGION_NAME = "eu-north-1" 
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
 AWS_QUERYSTRING_AUTH = False   # cleaner URLs (no ?X-Amz-Signature=...)
 AWS_S3_FILE_OVERWRITE = False  # don’t overwrite files with same name
 AWS_DEFAULT_ACL = None         # rely on bucket policy for permissions
 
+# Base URL for MEDIA (user-uploaded) files.
+# Django builds file URLs as MEDIA_URL + file_path, and because our default storage is S3,
+# this points at the S3 bucket domain. Keep the trailing "/"!
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 
 MIDDLEWARE = [

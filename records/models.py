@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.contrib.gis.db import models
 from django.utils import timezone
 from django.db.models import JSONField  # Import JSONField for storing polygon coordinates
@@ -10,6 +11,12 @@ User = get_user_model()
 
 def today_date():
     return timezone.now().date()
+
+
+def validate_file_size(file):
+    max_size_kb = 2048  # 2MB
+    if file.size > max_size_kb * 1024:
+        raise ValidationError(f"Max file size is {max_size_kb}KB")
 
 
 class Record(models.Model):
@@ -134,15 +141,25 @@ class Record(models.Model):
     # longitude = models.FloatField(blank=True, null=True)
     polygonCoordinate = JSONField(default=dict)  # Stores polygon as JSON
     picture1 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
+        blank=True, null=True, upload_to="pictures/%Y/%m/%d/",
+        validators=[validate_file_size]
+    )
     picture2 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
+        blank=True, null=True, upload_to="pictures/%Y/%m/%d/",
+        validators=[validate_file_size]
+    )
     picture3 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
+        blank=True, null=True, upload_to="pictures/%Y/%m/%d/",
+        validators=[validate_file_size]
+    )
     picture4 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
+        blank=True, null=True, upload_to="pictures/%Y/%m/%d/",
+        validators=[validate_file_size]
+    )
     picture5 = models.ImageField(
-        blank=True, null=True, upload_to="pictures/%Y/%m/%d/")
+        blank=True, null=True, upload_to="pictures/%Y/%m/%d/",
+        validators=[validate_file_size]
+    )
 
     def __str__(self):
         return f"{self.title}"

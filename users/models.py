@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
+
 # Custom user model to extend Django's default user model
+
+def validate_file_size(file):
+    max_size_kb = 2048  # 2MB
+    if file.size > max_size_kb * 1024:
+        raise ValidationError(f"Max file size is {max_size_kb}KB")
 
 
 class User(AbstractUser):
@@ -54,7 +61,9 @@ class Profile(models.Model):
         )  # Updates every time the profile is saved
     
     profile_picture = models.ImageField(
-        upload_to='profile_pictures/%Y/%m/%d/', null=True, blank=True)
+        upload_to='profile_pictures/%Y/%m/%d/', null=True, blank=True,
+        validators=[validate_file_size]
+    )
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
