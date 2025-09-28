@@ -122,7 +122,7 @@ class Record(models.Model):
         # lets you access all records for a user with user.records.all()
     )
     title = models.CharField(max_length=150)
-    PRN = models.IntegerField(blank=True, null=True)
+    PRN = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField()
     site_type = models.CharField(
         max_length=100,
