@@ -1,11 +1,11 @@
 from django.core.exceptions import ValidationError
-from django.contrib.gis.db import models
 from django.utils import timezone
+from django.db import models
 from django.db.models import JSONField  # Import JSONField for storing polygon coordinates
 # Import Point so we can create locations
 # using longitude and latitude coordinates
-from django.contrib.gis.geos import Point
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
 
 
@@ -113,6 +113,7 @@ class Record(models.Model):
         ('unknown', 'Unknown')
     ]
 
+    # ------ Core Fields ------
     recorded_by = models.ForeignKey(
         User,  # Assuming you have a custom user model in users app
         blank=True,
@@ -122,8 +123,9 @@ class Record(models.Model):
         # lets you access all records for a user with user.records.all()
     )
     title = models.CharField(max_length=150)
-    PRN = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField()
+    PRN = models.CharField(max_length=50, blank=True, null=True)
+
     site_type = models.CharField(
         max_length=100,
         choices=SITE_TYPE_CHOICES
@@ -136,10 +138,13 @@ class Record(models.Model):
     period = models.CharField(
         max_length=100,
         choices=PERIOD_CHOICES)
+    
     date_recorded = models.DateField(default=today_date)
-    # latitude = models.FloatField(blank=True, null=True)
-    # longitude = models.FloatField(blank=True, null=True)
-    polygonCoordinate = JSONField(default=dict)  # Stores polygon as JSON
+
+    # Store polygon as a JSON **list** of [lat, lng] pairs
+    polygonCoordinate = models.JSONField(default=list, null=False, blank=False)
+
+    # ----- Images -----
     picture1 = models.ImageField(
         blank=True, null=True, upload_to="pictures/%Y/%m/%d/",
         validators=[validate_file_size]
