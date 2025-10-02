@@ -76,7 +76,6 @@ class RecordSerializer(serializers.ModelSerializer):
         return rep
 
 
-
     class Meta:
         model = Record
         fields = '__all__'

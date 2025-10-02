@@ -138,7 +138,7 @@ class Record(models.Model):
     period = models.CharField(
         max_length=100,
         choices=PERIOD_CHOICES)
-    
+  
     date_recorded = models.DateField(default=today_date)
 
     # Store polygon as a JSON **list** of [lat, lng] pairs
