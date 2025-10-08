@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     # My Apps
     'records.apps.RecordsConfig',
     'users.apps.UsersConfig',  # Custom user app for extending Django's default user model
+    'news.apps.NewsConfig',
 
     # Storage
     'storages'
