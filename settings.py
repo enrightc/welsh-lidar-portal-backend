@@ -232,3 +232,12 @@ DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,  # Require users to enter their password twice when registering. If True, you need to pass re_password to /users/ endpoint, to validate password equality.
     "SEND_ACTIVATION_EMAIL": False,  # Do not send activation emails. Set to True when deploying
 }
+
+# Email Settings
+# DEV: print emails to the terminal so you can see them
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# Who the email is from + who should receive it
+DEFAULT_FROM_EMAIL = "Mapping the Past <hello@mappingthepast.co.uk>"
+HER_NOTIFY_TO = ["c.enright@me.com"]  # put the HER email here
+SITE_BASE_URL = "https://mappingthepast.co.uk"  # used for links in the email
