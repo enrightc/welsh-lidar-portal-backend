@@ -234,10 +234,15 @@ DJOSER = {
 }
 
 # Email Settings
-# DEV: print emails to the terminal so you can see them
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# Email settings (reads values from your .env file)
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "False") == "True"
 
-# Who the email is from + who should receive it
-DEFAULT_FROM_EMAIL = "Mapping the Past <hello@mappingthepast.co.uk>"
-HER_NOTIFY_TO = ["c.enright@me.com"]  # put the HER email here
-SITE_BASE_URL = "https://mappingthepast.co.uk"  # used for links in the email
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Mapping the Past <hello@mappingthepast.co.uk>")
+HER_NOTIFY_TO = [e.strip() for e in os.getenv("HER_NOTIFY_TO", "c.enright@me.com").split(",") if e.strip()]
+SITE_BASE_URL = os.getenv("SITE_BASE_URL", "http://localhost:8000")
