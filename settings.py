@@ -193,6 +193,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# DJOSER
+DJOSER = {
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "SEND_ACTIVATION_EMAIL": False,
+
+    "DOMAIN": "localhost:5173",
+    "SITE_NAME": "Mapping the Past",
+
+    "PASSWORD_RESET_CONFIRM_URL": "reset-password/{uid}/{token}",
+
+    "PERMISSIONS": {
+        "password_reset": ["rest_framework.permissions.AllowAny"],
+        "password_reset_confirm": ["rest_framework.permissions.AllowAny"],
+    },
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -226,11 +242,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
-}
-
-DJOSER = {
-    "USER_CREATE_PASSWORD_RETYPE": True,  # Require users to enter their password twice when registering. If True, you need to pass re_password to /users/ endpoint, to validate password equality.
-    "SEND_ACTIVATION_EMAIL": False,  # Do not send activation emails. Set to True when deploying
 }
 
 # Email Settings
