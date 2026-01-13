@@ -45,7 +45,7 @@ if not SECRET_KEY:
     raise ValueError("No DJANGO_SECRET_KEY found in environment or .env file.")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",") if os.environ.get("ALLOWED_HOSTS") else ["localhost", "127.0.0.1"]
 
