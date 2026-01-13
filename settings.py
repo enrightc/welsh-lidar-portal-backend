@@ -194,11 +194,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # DJOSER
+# Password reset emails (Djoser) need a top-level URL setting in this version.
+# Set FRONTEND_BASE_URL on Render to your deployed frontend domain (e.g. https://mappingthepast.co.uk)
+FRONTEND_BASE_URL = os.getenv("FRONTEND_BASE_URL", "http://localhost:5173")
+PASSWORD_RESET_CONFIRM_URL = f"{FRONTEND_BASE_URL}/reset-password/{{uid}}/{{token}}"
 DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
     "SEND_ACTIVATION_EMAIL": False,
 
-    "DOMAIN": "localhost:5173",
+    "DOMAIN": os.getenv("DJOSER_DOMAIN", "localhost:5173"),
     "SITE_NAME": "Mapping the Past",
 
     "PASSWORD_RESET_CONFIRM_URL": "reset-password/{uid}/{token}",
