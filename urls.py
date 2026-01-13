@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from records.api import views as records_api_views
 from users.api import views as users_api_views
+from django.views.generic import RedirectView
 
 # Serving files uploaded by a user during development
 from django.conf import settings
@@ -36,4 +37,11 @@ urlpatterns = [
     # The frontend (e.g. React) will send requests here during authentication — users won't see or visit these URLs directly.
     path('api-auth-djoser/', include('djoser.urls')),
     path('api-auth-djoser/', include('djoser.urls.authtoken')),
+    path(
+        'reset-password/<str:uid>/<str:token>',
+        RedirectView.as_view(
+            url='http://localhost:5173/reset-password/%(uid)s/%(token)s',
+            permanent=False,
+        ),
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

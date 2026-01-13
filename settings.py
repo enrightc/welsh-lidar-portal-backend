@@ -193,6 +193,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# DJOSER
+DJOSER = {
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "SEND_ACTIVATION_EMAIL": False,
+
+    "DOMAIN": "localhost:5173",
+    "SITE_NAME": "Mapping the Past",
+
+    "PASSWORD_RESET_CONFIRM_URL": "reset-password/{uid}/{token}",
+
+    "PERMISSIONS": {
+        "password_reset": ["rest_framework.permissions.AllowAny"],
+        "password_reset_confirm": ["rest_framework.permissions.AllowAny"],
+    },
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -228,7 +244,16 @@ REST_FRAMEWORK = {
     ),
 }
 
-DJOSER = {
-    "USER_CREATE_PASSWORD_RETYPE": True,  # Require users to enter their password twice when registering. If True, you need to pass re_password to /users/ endpoint, to validate password equality.
-    "SEND_ACTIVATION_EMAIL": False,  # Do not send activation emails. Set to True when deploying
-}
+# Email Settings
+# Email settings (reads values from your .env file)
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", "587"))
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
+EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL", "False") == "True"
+
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "Mapping the Past <hello@mappingthepast.co.uk>")
+HER_NOTIFY_TO = [e.strip() for e in os.getenv("HER_NOTIFY_TO", "c.enright@me.com").split(",") if e.strip()]
+SITE_BASE_URL = os.getenv("SITE_BASE_URL", "http://localhost:8000")
