@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'corsheaders',      # Enables Cross-Origin Resource Sharing (CORS) so the frontend (e.g. React) can talk to the backend (Django) from a different origin (like localhost:3000)
     'djoser',        # Django REST framework authentication library
     'rest_framework.authtoken',  # Token authentication for REST framework
+    'anymail'
 
     # My Apps
     'records.apps.RecordsConfig',
@@ -253,6 +254,9 @@ REST_FRAMEWORK = {
 # Email Settings
 # Email settings (reads values from your .env file)
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+ANYMAIL = {
+    "RESEND_API_KEY": os.getenv("RESEND_API_KEY"),
+}
 EMAIL_HOST = os.getenv("EMAIL_HOST", "")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
