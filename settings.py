@@ -193,15 +193,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Djoser password reset link format (used when generating reset emails)
+# In production you can override this with an env var if needed.
+PASSWORD_RESET_CONFIRM_URL = os.getenv(
+    "PASSWORD_RESET_CONFIRM_URL",
+    "reset-password/{uid}/{token}",
+)
 # DJOSER
 DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
     "SEND_ACTIVATION_EMAIL": False,
 
-    "DOMAIN": "localhost:5173",
+    "DOMAIN": os.getenv("DJOSER_DOMAIN", "localhost:5173"),
     "SITE_NAME": "Mapping the Past",
 
-    "PASSWORD_RESET_CONFIRM_URL": "reset-password/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": PASSWORD_RESET_CONFIRM_URL,
 
     "PERMISSIONS": {
         "password_reset": ["rest_framework.permissions.AllowAny"],
