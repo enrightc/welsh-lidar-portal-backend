@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     'corsheaders',      # Enables Cross-Origin Resource Sharing (CORS) so the frontend (e.g. React) can talk to the backend (Django) from a different origin (like localhost:3000)
     'djoser',        # Django REST framework authentication library
     'rest_framework.authtoken',  # Token authentication for REST framework
-    'anymail'
+    'anymail',
 
     # My Apps
     'records.apps.RecordsConfig',
