@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'django.contrib.sites',
     'django_extensions',
     'rest_framework',
     'rest_framework_gis',
@@ -75,6 +76,8 @@ INSTALLED_APPS = [
     # Storage
     'storages'
 ]
+
+SITE_ID = 1
 
 # Default - anything saved through a FileField or ImageField goes to S3
 #static files (e.g. CSS, JavaScript) served by WhiteNoise
