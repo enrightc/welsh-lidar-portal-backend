@@ -199,16 +199,22 @@ AUTH_PASSWORD_VALIDATORS = [
 PASSWORD_RESET_CONFIRM_URL = os.getenv(
     "PASSWORD_RESET_CONFIRM_URL",
     "reset-password/{uid}/{token}",
-)
+).lstrip("/")
+
+# Djoser domain/protocol used in email links (frontend domain, not backend)
+DJOSER_DOMAIN = os.getenv("DJOSER_DOMAIN", "localhost:5173")
+DJOSER_DOMAIN = DJOSER_DOMAIN.replace("https://", "").replace("http://", "").rstrip("/")
+DJOSER_PROTOCOL = os.getenv("DJOSER_PROTOCOL", "https")
+
 # DJOSER
 DJOSER = {
     "USER_CREATE_PASSWORD_RETYPE": True,
     "SEND_ACTIVATION_EMAIL": False,
 
-    "DOMAIN": os.getenv("DJOSER_DOMAIN", "localhost:5173"),
-    "SITE_NAME": "Mapping the Past",
-
     "PASSWORD_RESET_CONFIRM_URL": PASSWORD_RESET_CONFIRM_URL,
+    "PROTOCOL": DJOSER_PROTOCOL,
+    "DOMAIN": DJOSER_DOMAIN,
+    "SITE_NAME": "Mapping the Past",
 
     "PERMISSIONS": {
         "password_reset": ["rest_framework.permissions.AllowAny"],
