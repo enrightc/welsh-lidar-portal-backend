@@ -37,6 +37,7 @@ urlpatterns = [
     # The frontend (e.g. React) will send requests here during authentication — users won't see or visit these URLs directly.
     path('api-auth-djoser/', include('djoser.urls')),
     path('api-auth-djoser/', include('djoser.urls.authtoken')),
+    path("api/users/", include("users.urls")),
     path(
         'reset-password/<str:uid>/<str:token>',
         RedirectView.as_view(
