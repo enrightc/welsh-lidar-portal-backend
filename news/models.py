@@ -24,6 +24,8 @@ class News(models.Model):
     # Multiple tags per article (optional)
     tags = models.ManyToManyField(Tag, blank=True, related_name="news_items")
 
+    image = models.ImageField(upload_to="news_images/", null=True, blank=True)
+
     is_published = models.BooleanField(default=False)
     published_at = models.DateTimeField(null=True, blank=True)
 
