@@ -16,13 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from records.api import views as records_api_views
 from users.api import views as users_api_views
 from django.views.generic import RedirectView
 
 # Serving files uploaded by a user during development
 from django.conf import settings
 from django.conf.urls.static import static
+import os
+
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,8 +32,7 @@ urlpatterns = [
     path('api/profiles/<int:pk>/', users_api_views.ProfileDetail.as_view()),
     path('api/profiles/<int:pk>/update/', users_api_views.ProfileUpdate.as_view()),
     path('api/profiles/username/<str:username>/', users_api_views.ProfileByUsername.as_view()),
-    path('api/records/', records_api_views.RecordList.as_view()),
-    path('api/records/create/', records_api_views.RecordCreate.as_view()),
+    path("api/", include("records.api.urls")),
     path('api/news/', include('news.urls')), 
     # Djoser provides ready-made endpoints for user authentication (register, login, logout, etc.)
     # The frontend (e.g. React) will send requests here during authentication — users won't see or visit these URLs directly.
@@ -41,7 +42,7 @@ urlpatterns = [
     path(
         'reset-password/<str:uid>/<str:token>',
         RedirectView.as_view(
-            url='http://localhost:5173/reset-password/%(uid)s/%(token)s',
+            url=f'{FRONTEND_URL}/reset-password/%(uid)s/%(token)s',
             permanent=False,
         ),
     ),
